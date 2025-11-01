@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Te Amo y Más</title>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      overflow: hidden;
+      background: radial-gradient(ellipse at bottom, #0d0d1a 0%, #000000 100%);
+      height: 100vh;
+      width: 100%;
+      position: relative;
+      color: white;
+    }
+
+    .portada {
+      height: 100vh;
+      width: 100%;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      z-index: 1;
+      flex-direction: column;
+      padding: 20px;
+    }
+
+    .contenido {
+      z-index: 2;
+      animation: fadeIn 2s ease-in-out;
+      max-width: 800px;
+    }
+
+    .contenido h1 {
+      font-family: 'Great Vibes', cursive;
+      font-size: 4em;
+      animation: floatText 3s ease-in-out infinite;
+    }
+
+    .contenido p {
+      font-size: 1.5em;
+      margin-top: 10px;
+      opacity: 0.85;
+    }
+
+    .boton-musica {
+      margin-top: 30px;
+      font-size: 1.2em;
+      padding: 12px 24px;
+      background: #ff69b4;
+      border: none;
+      border-radius: 30px;
+      color: white;
+      cursor: pointer;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255,105,180, 0.7); }
+      70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(255,105,180, 0); }
+      100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255,105,180, 0); }
+    }
+
+    .letra {
+      margin-top: 20px;
+      font-size: 1.2em;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+
+    .letra.mostrar {
+      opacity: 1;
+    }
+
+    /* Luna */
+    .luna {
+      position: absolute;
+      top: 10%;
+      left: 10%;
+      width: 120px;
+      height: 120px;
+      background: radial-gradient(circle at 30% 30%, #fdfdfd, #dcdcdc);
+      border-radius: 50%;
+      box-shadow: 0 0 40px 10px rgba(255, 255, 255, 0.3);
+      z-index: 0;
+    }
+
+    /* Estrellas */
+    .estrellas {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: transparent;
+      z-index: 0;
+    }
+
+    .estrella {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: white;
+      border-radius: 50%;
+      animation: parpadeo 2s infinite alternate;
+    }
+
+    @keyframes parpadeo {
+      from { opacity: 0.2; }
+      to { opacity: 1; }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes floatText {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+  </style>
+</head>
+<body>
+  <div class="portada">
+    <div class="luna"></div>
+    <div class="estrellas">
+      <script>
+        for (let i = 0; i < 100; i++) {
+          const estrella = document.createElement('div');
+          estrella.className = 'estrella';
+          estrella.style.top = Math.random() * 100 + '%';
+          estrella.style.left = Math.random() * 100 + '%';
+          estrella.style.animationDuration = (1 + Math.random() * 2) + 's';
+          document.querySelector('.estrellas').appendChild(estrella);
+        }
+      </script>
+    </div>
+    <div class="contenido">
+      <h1>En este y todos los universos te Amo</h1>
+      <p>Te amare en vida y en muerte</p>
+      <button class="boton-musica" onclick="reproducirCancion()">✨ Reproducir canción ✨</button>
+      <div id="letraCancion"></div>
+    </div>
+  </div>
+
+  <!-- Audio oculto -->
+  <audio id="audioCancion" src="https://TU_USUARIO.github.io/RUTA/te-amo-y-mas.mp3"></audio>
+
+  <script>
+    const letra = [
+      "Te amo y más de lo que puedes imaginar",
+      "Te amo además como nunca nadie jamás lo hará",
+      "En esta canción, va mi corazón",
+      "Amor más que amor es el nuestro y te lo vengo a dar",
+      "Te miro y más... y más y más te quiero mirar",
+      "Te amo y sabrás puro sentimiento y no hay nada más",
+      "Y sueño llegar, a tu alma tocar",
+      "Amor más que amor es el nuestro y te lo vengo a dar",
+      "Ruego a Dios tenerte a mi lado",
+      "Y entonces poderte abrazar",
+      "Si no estás aquí, algo falta",
+      "Yo por ti pelearé hasta el final",
+      "Y sueño llegar, a tu alma tocar",
+      "Amor más que amor es el nuestro y te lo vengo a dar",
+      "Te amo y ¡más!",
+      "Te amo y sabrás que nadie como yo te amará",
+      "En esta canción, yo veo quien soy",
+      "Amor más que amor es el mío y lo siento",
+      "Amor más que amor es el tuyo y presiento",
+      "Amor más que amor es el nuestro",
+      "Si tú me... lo das"
+    ];
+
+    function reproducirCancion() {
+      document.getElementById('audioCancion').play();
+      mostrarLetra();
+    }
+
+    function mostrarLetra() {
+      const contenedor = document.getElementById('letraCancion');
+      contenedor.innerHTML = '';
+      letra.forEach((verso, i) => {
+        const linea = document.createElement('p');
+        linea.className = 'letra';
+        linea.textContent = verso;
+        contenedor.appendChild(linea);
+        setTimeout(() => {
+          linea.classList.add('mostrar');
+        }, i * 4000); // cada verso aparece cada 4 segundos
+      });
+    }
+  </script>
+</body>
+</html>
