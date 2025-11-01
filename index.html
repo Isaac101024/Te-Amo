@@ -54,8 +54,8 @@
 
     .boton-musica {
       margin-top: 30px;
-      font-size: 1.2em;
-      padding: 12px 24px;
+      font-size: 1.1em;
+      padding: 10px 22px;
       background: #ff69b4;
       border: none;
       border-radius: 30px;
@@ -71,8 +71,8 @@
     }
 
     .letra {
-      margin-top: 20px;
-      font-size: 1.2em;
+      margin-top: 12px;
+      font-size: 0.95em;
       opacity: 0;
       transition: opacity 1s ease-in-out;
     }
@@ -145,14 +145,14 @@
     </div>
     <div class="contenido">
       <h1>En este y todos los universos te Amo</h1>
-      <p>Te amare en vida y en muerte</p>
+      <p>Te amaré en vida y en muerte</p>
       <button class="boton-musica" onclick="reproducirCancion()">✨ Reproducir canción ✨</button>
       <div id="letraCancion"></div>
     </div>
   </div>
 
   <!-- Audio oculto -->
-  <audio id="audioCancion" src="https://TU_USUARIO.github.io/RUTA/te-amo-y-mas.mp3"></audio>
+  <audio id="audioCancion" src="https://isaac101024.github.io/Te-Amo/cancion.mp3"></audio>
 
   <script>
     const letra = [
@@ -180,7 +180,10 @@
     ];
 
     function reproducirCancion() {
-      document.getElementById('audioCancion').play();
+      const audio = document.getElementById('audioCancion');
+      audio.play().catch(error => {
+        console.log("Error al reproducir:", error);
+      });
       mostrarLetra();
     }
 
@@ -200,3 +203,5 @@
   </script>
 </body>
 </html>
+
+
