@@ -81,7 +81,6 @@
       opacity: 1;
     }
 
-    /* Luna */
     .luna {
       position: absolute;
       top: 10%;
@@ -94,7 +93,6 @@
       z-index: 0;
     }
 
-    /* Estrellas */
     .estrellas {
       position: absolute;
       width: 100%;
@@ -151,7 +149,6 @@
     </div>
   </div>
 
-  <!-- Audio oculto -->
   <audio id="audioCancion" src="https://isaac101024.github.io/Te-Amo/cancion.mp3"></audio>
 
   <script>
@@ -181,8 +178,12 @@
 
     function reproducirCancion() {
       const audio = document.getElementById('audioCancion');
-      audio.play().catch(error => {
-        console.log("Error al reproducir:", error);
+      audio.volume = 1.0;
+      audio.play().then(() => {
+        console.log("Canción reproduciéndose");
+      }).catch(error => {
+        console.error("Error al reproducir:", error);
+        alert("Tu navegador bloqueó la reproducción automática. Toca el botón otra vez o revisa los permisos de sonido.");
       });
       mostrarLetra();
     }
@@ -197,11 +198,12 @@
         contenedor.appendChild(linea);
         setTimeout(() => {
           linea.classList.add('mostrar');
-        }, i * 4000); // cada verso aparece cada 4 segundos
+        }, i * 4000);
       });
     }
   </script>
 </body>
 </html>
+
 
 
