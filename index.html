@@ -5,80 +5,81 @@
   <title>Te Amo y Más</title>
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
     body {
       font-family: 'Montserrat', sans-serif;
-      overflow: hidden;
       background: radial-gradient(ellipse at bottom, #0d0d1a 0%, #000000 100%);
-      height: 100vh;
-      width: 100%;
-      position: relative;
       color: white;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
     }
 
     .portada {
       height: 100vh;
       width: 100%;
-      position: relative;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
       text-align: center;
-      z-index: 1;
-      flex-direction: column;
       padding: 20px;
+      position: relative;
+      z-index: 1;
     }
 
     .contenido {
       z-index: 2;
-      animation: fadeIn 2s ease-in-out;
-      max-width: 800px;
+      max-width: 1000px;
+      position: relative;
     }
 
     .contenido h1 {
       font-family: 'Great Vibes', cursive;
-      font-size: 4em;
+      font-size: 3em;
       animation: floatText 3s ease-in-out infinite;
     }
 
     .contenido p {
-      font-size: 1.5em;
+      font-size: 1.2em;
       margin-top: 10px;
       opacity: 0.85;
     }
 
     .boton-musica {
       margin-top: 30px;
-      font-size: 1.1em;
+      font-size: 1em;
       padding: 10px 22px;
-      background: #ff69b4;
-      border: none;
+      background: transparent;
+      border: 2px solid #ffffff88;
       border-radius: 30px;
       color: white;
       cursor: pointer;
-      animation: pulse 2s infinite;
+      transition: background 0.3s, color 0.3s, opacity 0.5s ease;
+      z-index: 10;
+      position: relative;
     }
 
-    @keyframes pulse {
-      0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255,105,180, 0.7); }
-      70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(255,105,180, 0); }
-      100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255,105,180, 0); }
+    .boton-musica:hover {
+      background: white;
+      color: #0d0d1a;
     }
 
-    .letra {
-      margin-top: 12px;
-      font-size: 0.95em;
+    .boton-musica.oculto {
       opacity: 0;
-      transition: opacity 1s ease-in-out;
+      pointer-events: none;
     }
 
-    .letra.mostrar {
+    .verso {
+      font-size: 0.6em;
+      opacity: 0.2;
+      transition: opacity 2s ease, text-shadow 2s ease;
+      margin: 6px 0;
+      max-width: 90%;
+    }
+
+    .verso.iluminar {
       opacity: 1;
+      text-shadow: 0 0 10px white;
     }
 
     .luna {
@@ -97,7 +98,6 @@
       position: absolute;
       width: 100%;
       height: 100%;
-      background: transparent;
       z-index: 0;
     }
 
@@ -112,11 +112,6 @@
 
     @keyframes parpadeo {
       from { opacity: 0.2; }
-      to { opacity: 1; }
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; }
       to { opacity: 1; }
     }
 
@@ -144,7 +139,7 @@
     <div class="contenido">
       <h1>En este y todos los universos te Amo</h1>
       <p>Te amaré en vida y en muerte</p>
-      <button class="boton-musica" onclick="reproducirCancion()">✨ Reproducir canción ✨</button>
+      <button class="boton-musica" id="botonMusica" onclick="reproducirCancion()">¿Sabes cuánto te amo?</button>
       <div id="letraCancion"></div>
     </div>
   </div>
@@ -178,32 +173,33 @@
 
     function reproducirCancion() {
       const audio = document.getElementById('audioCancion');
-      audio.volume = 1.0;
-      audio.play().then(() => {
-        console.log("Canción reproduciéndose");
-      }).catch(error => {
-        console.error("Error al reproducir:", error);
-        alert("Tu navegador bloqueó la reproducción automática. Toca el botón otra vez o revisa los permisos de sonido.");
-      });
-      mostrarLetra();
+      const boton = document.getElementById('botonMusica');
+      boton.classList.add('oculto');
+      audio.play();
+      iluminarVersos();
     }
 
-    function mostrarLetra() {
+    function iluminarVersos() {
       const contenedor = document.getElementById('letraCancion');
       contenedor.innerHTML = '';
       letra.forEach((verso, i) => {
         const linea = document.createElement('p');
-        linea.className = 'letra';
+        linea.className = 'verso';
         linea.textContent = verso;
         contenedor.appendChild(linea);
+      });
+
+      const versos = document.querySelectorAll('.verso');
+      versos.forEach((linea, i) => {
         setTimeout(() => {
-          linea.classList.add('mostrar');
-        }, i * 4000);
+          linea.classList.add('iluminar');
+        }, i * 10000); // cada verso se ilumina cada 10 segundos
       });
     }
   </script>
 </body>
 </html>
+
 
 
 
